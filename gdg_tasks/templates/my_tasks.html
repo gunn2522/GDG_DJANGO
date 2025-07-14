@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}My Tasks{% endblock %}
+
+{% block content %}
+<div class="my-tasks-container">
+  <h2 class="section-heading">My Tasks</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {% for task in tasks %}
+      <div class="task-card">
+        <div class="task-details">
+          <strong>{{ task.title }}</strong> – {{ task.event.title }} ({{ task.role|capfirst }})
+        </div>
+        <div class="task-status">
+          {% if not task.is_completed %}
+            <button class="btn-task-done" name="task_id" value="{{ task.id }}">Mark as Done</button>
+          {% else %}
+            <span class="completed-tag">&#x2705; Completed</span>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <div class="task-card empty">No tasks assigned.</div>
+    {% endfor %}
+  </form>
+</div>
+
+<style>
+  .my-tasks-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .section-heading {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #4285F4;
+  }
+
+  .task-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+  }
+
+  .task-card.empty {
+    justify-content: center;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+  }
+
+  .btn-task-done {
+    background-color: #0F9D58;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .btn-task-done:hover {
+    background-color: #0b7c45;
+  }
+
+  .completed-tag {
+    color: #0F9D58;
+    font-weight: bold;
+    font-size: 15px;
+  }
+</style>
+{% endblock %}

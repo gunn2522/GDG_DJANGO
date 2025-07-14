@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Registered Events (Mark Attendance)</h2>
+<ul>
+  {% for event in events %}
+    <li>
+      {{ event.title }} —
+      <a href="{% url 'mark_attendance' event.id %}">Mark Attendance</a>
+    </li>
+  {% empty %}
+    <li>You are not registered in any events.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,81 @@
+<h2 style="text-align: center; color: #4285F4; margin-bottom: 20px;">My Reported Issues</h2>
+
+<ul class="issue-list">
+  {% for issue in issues %}
+    <li class="issue-item">
+      <div>
+        <strong>{{ issue.issue_type }}</strong> at <span class="location">{{ issue.location }}</span>
+      </div>
+      <div class="status-tag {{ issue.status|lower }}">
+        {{ issue.status|capfirst }}
+      </div>
+    </li>
+  {% empty %}
+    <p class="no-issues">No issues reported yet.</p>
+  {% endfor %}
+</ul>
+
+<style>
+  .issue-list {
+    list-style: none;
+    padding: 0;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .issue-item {
+    background: #fff;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-left: 5px solid #4285F4;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .issue-item strong {
+    color: #333;
+  }
+
+  .location {
+    color: #666;
+    font-style: italic;
+  }
+
+  .status-tag {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: capitalize;
+  }
+
+  .status-tag.pending {
+    background-color: #fbbc05;
+    color: #000;
+  }
+
+  .status-tag.in_progress {
+    background-color: #4285F4;
+    color: white;
+  }
+
+  .status-tag.resolved {
+    background-color: #34A853;
+    color: white;
+  }
+
+  .status-tag.rejected {
+    background-color: #EA4335;
+    color: white;
+  }
+
+  .no-issues {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    margin-top: 20px;
+  }
+</style>

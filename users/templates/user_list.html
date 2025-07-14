@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}GDG Team Members{% endblock %}
+
+{% block content %}
+<div class="team-container">
+    <h1 class="team-heading">GDG Team Members</h1>
+    <div class="team-card">
+        <table class="team-table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.get_role_display }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="empty-text">No users found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+  .team-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .team-heading {
+    text-align: center;
+    color: #4285F4;
+    font-size: 28px;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .team-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    overflow-x: auto;
+  }
+
+  .team-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .team-table thead {
+    background-color: #f5f5f5;
+    color: #333;
+  }
+
+  .team-table th, .team-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e2e2;
+  }
+
+  .team-table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  .empty-text {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 16px;
+  }
+</style>
+{% endblock %}

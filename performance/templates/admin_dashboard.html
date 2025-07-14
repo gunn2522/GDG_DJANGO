@@ -1,0 +1,21 @@
+<h2>Performance Overview - GDG Members</h2>
+<table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Score</th>
+    <th>Tasks</th>
+    <th>Events Led</th>
+    <th>Issues</th>
+    <th>Comment</th>
+  </tr>
+  {% for record in records %}
+  <tr>
+    <td>{{ record.user.username }}</td>
+    <td>{{ record.total_score }}</td>
+    <td>{{ record.tasks_completed }}</td>
+    <td>{{ record.events_led }}</td>
+    <td>{{ record.issues_reported }}</td>
+    <td>{{ record.admin_comment|default:"-" }}</td>
+  </tr>
+  {% endfor %}
+</table>

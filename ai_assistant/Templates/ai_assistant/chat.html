@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Ask AI Assistant 🤖{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width:600px;margin:40px auto;font-family:'Segoe UI', sans-serif;">
+    <div class="card gdg-card">
+        <h2 style="text-align:center;color:#4285F4;margin-bottom:20px;">Ask AI Assistant 🤖</h2>
+        <form method="post" class="gdg-form">
+            {% csrf_token %}
+            <textarea
+                name="prompt"
+                placeholder="What's your question?"
+                rows="4"
+                class="gdg-textarea"
+                required
+            ></textarea>
+            <button type="submit" class="gdg-button">Ask</button>
+        </form>
+
+        {% if answer %}
+        <div class="gdg-answer">
+            <h3 style="color:#34A853;">Answer:</h3>
+            <p>{{ answer|safe }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+  .gdg-card {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+  }
+
+  .gdg-card:hover {
+      transform: translateY(-2px);
+  }
+
+  .gdg-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+  }
+
+  .gdg-textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+  }
+
+  .gdg-textarea:focus {
+      outline: none;
+      border-color: #4285F4;
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+  }
+
+  .gdg-button {
+      background: linear-gradient(90deg, #4285F4, #34A853, #FBBC05);
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+  }
+
+  .gdg-button:hover {
+      background: linear-gradient(90deg, #34A853, #4285F4, #EA4335);
+  }
+
+  .gdg-answer {
+      margin-top: 25px;
+      background: #f5f5f5;
+      padding: 15px;
+      border-left: 5px solid #34A853;
+      border-radius: 6px;
+      animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+{% endblock %}

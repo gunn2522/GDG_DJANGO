@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1>Create New Event</h1>
+
+  <form method="post" enctype="multipart/form-data" class="card">
+    {% csrf_token %}
+
+    <label for="title"><strong>Title</strong></label>
+    <input type="text" name="title" id="title" required class="form-input">
+
+    <label for="description"><strong>Description</strong></label>
+    <textarea name="description" id="description" rows="4" required class="form-input"></textarea>
+
+    <label for="date"><strong>Date</strong></label>
+    <input type="date" name="date" id="date" required class="form-input">
+
+    <label for="time"><strong>Time</strong></label>
+    <input type="time" name="time" id="time" required class="form-input">
+
+    <label for="venue"><strong>Venue</strong></label>
+    <input type="text" name="venue" id="venue" required class="form-input">
+    <label for="registration_link"><strong>Registration Link (optional)</strong></label>
+      <input type="url" name="registration_link" id="registration_link" class="form-input" placeholder="https://example.com/register">
+
+
+    <label for="systems_required"><strong>Systems Required</strong></label>
+    <input type="text" name="systems_required" id="systems_required" class="form-input">
+
+    <label for="last_date_to_apply"><strong>Last Date to Apply</strong></label>
+    <input type="date" name="last_date_to_apply" id="last_date_to_apply" required class="form-input">
+
+    <label for="poster"><strong>Event Poster</strong></label>
+    <input type="file" name="poster" id="poster" accept="image/*" class="form-input">
+
+
+    <button type="submit" class="btn btn-create" style="margin-top: 20px;">Submit Event</button>
+  </form>
+
+  <div style="margin-top: 20px;">
+    <a href="{% url 'event_list' %}" class="btn btn-register">← Back to Events</a>
+  </div>
+</div>
+
+<style>
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  textarea.form-input {
+    resize: vertical;
+  }
+</style>
+{% endblock %}

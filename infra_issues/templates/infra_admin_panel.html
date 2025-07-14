@@ -1,0 +1,81 @@
+<h2 style="text-align: center; color: #4285F4; margin-bottom: 20px;">Infra Issue Admin Panel</h2>
+
+<form method="post" class="issue-form">
+  {% csrf_token %}
+  {% for issue in issues %}
+    <div class="issue-card">
+      <p><strong>{{ issue.issue_type }}</strong> — {{ issue.location }}</p>
+      <p><span class="label">Reported by:</span> {{ issue.reporter.username }} at {{ issue.reported_at|date:"Y-m-d H:i" }}</p>
+
+      <label>Status:</label>
+      <select name="status" class="status-select">
+        <option value="pending" {% if issue.status == "pending" %}selected{% endif %}>Pending</option>
+        <option value="in_progress" {% if issue.status == "in_progress" %}selected{% endif %}>In Progress</option>
+        <option value="resolved" {% if issue.status == "resolved" %}selected{% endif %}>Resolved</option>
+        <option value="rejected" {% if issue.status == "rejected" %}selected{% endif %}>Rejected</option>
+      </select>
+
+      <input type="hidden" name="issue_id" value="{{ issue.id }}">
+
+      <button type="submit" class="btn-update">Update</button>
+    </div>
+  {% endfor %}
+</form>
+
+<style>
+  .issue-form {
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .issue-card {
+    border: 1px solid #ddd;
+    border-left: 5px solid #4285F4;
+    padding: 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+    background: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+  }
+
+  .issue-card:hover {
+    transform: translateY(-3px);
+    background: #fff;
+  }
+
+  .issue-card p {
+    margin: 6px 0;
+  }
+
+  .label {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .status-select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 14px;
+  }
+
+  .btn-update {
+    background: #0F9D58;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+
+  .btn-update:hover {
+    background: #0c7c45;
+  }
+</style>

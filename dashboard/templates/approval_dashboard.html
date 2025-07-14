@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Approval Dashboard</title>
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <img src="{% static 'images/gdg_logo.png' %}" alt="GDG Logo" style="height: 50px;">
+        </div>
+        <div class="header-center">
+            <h1>Approval Dashboard</h1>
+            <p>Manage approvals for Events and Registrations</p>
+        </div>
+        <div class="header-right">
+            {% if user.is_authenticated %}
+                <span>Welcome, {{ user.username }}</span> |
+                <a href="{% url 'logout' %}" class="btn btn-red">Logout</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        {% if user.role == 'event_head' %}
+            <h2>Pending Event Registrations (Your Events)</h2>
+            {% if approval_pending %}
+                <ul>
+                    {% for reg in approval_pending %}
+                        <li>
+                            {{ reg.student.username }} applied for <strong>{{ reg.event.title }}</strong>
+                            <form method="post" action="{% url 'approve_registration' reg.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-green">Approve</button>
+                                <a href="{% url 'reject_registration' reg.id %}" class="btn btn-red">Reject</a>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No registration approvals pending.</p>
+            {% endif %}
+        {% endif %}
+
+        {% if user.role == 'hod' %}
+            <h2>Pending Events (Venue Approval)</h2>
+            {% if events_to_approve %}
+                <ul>
+                    {% for event in events_to_approve %}
+                        <li>
+                            <strong>{{ event.title }}</strong> on {{ event.date }} by {{ event.created_by.username }}
+                            <form method="post" action="{% url 'approve_event' event.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-green">Approve</button>
+                                <a href="{% url 'reject_event' event.id %}" class="btn btn-red">Reject</a>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No events pending venue approval.</p>
+            {% endif %}
+
+            <h2>Unblock Requests</h2>
+            {% if unblock_requests %}
+                <ul>
+                    {% for u in unblock_requests %}
+                        <li>
+                            {{ u.username }} - Blocked
+                            <form method="post" action="{% url 'approve_unblock' u.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-green">Unblock</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No unblock requests.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <footer>
+        &copy; 2025 GDG Gulzar Group of Institutes | Approval Dashboard
+    </footer>
+</body>
+</html>

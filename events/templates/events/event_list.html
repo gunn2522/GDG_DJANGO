@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1>GDG Campus Events</h1>
+
+
+ {# Show Create Event button for admin, gdg_member, or hod #}
+{% if user.role == 'admin' or user.role == 'gdg_member' or user.role == 'hod' %}
+    <a href="{% url 'create_event' %}" class="btn btn-create">+ Create Event</a>
+{% endif %}
+
+
+  {% for event in events %}
+    <div class="card">
+      <h2>{{ event.title }}</h2>
+      <p>{{ event.description }}</p>
+
+      {% if event.poster %}
+        <img src="{{ event.poster.url }}" alt="{{ event.title }} Poster" class="poster">
+      {% endif %}
+
+      <p><strong>Date:</strong> {{ event.date|date:"Y-m-d" }} @ {{ event.time|time:"H:i" }}</p>
+      <p><strong>Venue:</strong> {{ event.venue }}
+        {% if event.is_venue_approved_by_hod %}
+          {% if user.role == 'Admin' or user.role == 'GDG' or user.role == 'HOD' %}
+            <span class="badge badge-approved">Approved</span>
+          {% endif %}
+        {% endif %}
+      </p>
+
+
+
+      {% if user.role == 'student' %}
+        <p><strong>Apply By:</strong> {{ event.last_date_to_apply|date:"Y-m-d" }}</p>
+
+        {% if event.last_date_to_apply >= today %}
+          {% if event.is_user_registered %}
+            <p>You are already registered ✅</p>
+          {% else %}
+            {% if event.registration_link %}
+              <a href="{{ event.registration_link }}" target="_blank" class="btn btn-register">Register Externally</a>
+            {% else %}
+              <form method="post" action="{% url 'register_for_event' event.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-register">Register</button>
+              </form>
+            {% endif %}
+          {% endif %}
+        {% else %}
+          <p class="badge badge-closed">Registration Closed</p>
+        {% endif %}
+
+        {% if event.can_mark_attendance %}
+          <a href="{% url 'mark_attendance' event.id %}">Mark Attendance</a>
+        {% endif %}
+      {% endif %}
+
+      {% if user.role == 'HOD' %}
+        <p><strong>System Needs:</strong> {{ event.systems_required }}</p>
+        <p><strong>Apply By:</strong> {{ event.last_date_to_apply|date:"Y-m-d" }}</p>
+
+        {% if not event.is_venue_approved_by_hod %}
+          <form method="post" action="{% url 'approve_venue' event.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-approve">Approve Venue</button>
+          </form>
+        {% endif %}
+      {% endif %}
+
+      {% if user.role == 'Admin' or user.role == 'GDG' %}
+        <p><strong>System Needs:</strong> {{ event.systems_required }}</p>
+        <p><strong>Apply By:</strong> {{ event.last_date_to_apply|date:"Y-m-d" }}</p>
+        <p><em>Admin tools or analytics can be added here.</em></p>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>No events available.</p>
+  {% endfor %}
+</div>
+
+<style>
+
+  .container {
+    max-width: 800px;
+    margin: auto;
+  }
+  h1 {
+    text-align: center;
+    color: #4285F4;
+  }
+  .btn {
+    padding: 8px 16px;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-create {
+    background: #0F9D58;
+    margin-bottom: 20px;
+  }
+  .btn-register {
+    background: #F4B400;
+  }
+  .btn-approve {
+    background: #DB4437;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+  .badge-approved {
+    background: #4CAF50;
+    color: #fff;
+  }
+  .badge-closed {
+    background: #777;
+    color: #fff;
+  }
+  .card {
+    background: #fff;
+    padding: 16px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .card p {
+    margin: 6px 0;
+  }
+  img.poster {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 6px;
+  }
+</style>
+
+{% endblock %}

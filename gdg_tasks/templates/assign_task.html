@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="form-heading">Assign Task</h2>
+
+<form method="post" class="assign-task-form">
+  {% csrf_token %}
+
+  <label for="title">Task Title</label>
+  <input name="title" id="title" placeholder="Enter task title" required>
+
+  <label for="description">Description</label>
+  <textarea name="description" id="description" placeholder="Enter task description" required></textarea>
+
+  <label for="role">Task Role</label>
+  <select name="role" id="role" required>
+    <option value="" disabled selected>Select role</option>
+    <option value="manage_students">Manage Students</option>
+    <option value="photography">Photography</option>
+    <option value="attendance">Attendance</option>
+    <option value="tech_setup">Tech Setup</option>
+    <option value="reporting">Issue Reporting</option>
+  </select>
+
+  <label for="assigned_to">Assign To</label>
+  <select name="assigned_to" id="assigned_to" required>
+    <option value="" disabled selected>Select a user</option>
+    {% for user in users %}
+      <option value="{{ user.id }}">{{ user.username }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="event">Event</label>
+  <select name="event" id="event" required>
+    <option value="" disabled selected>Select an event</option>
+    {% for event in events %}
+      <option value="{{ event.id }}">{{ event.title }}</option>
+    {% endfor %}
+  </select>
+
+  <button type="submit">Assign Task</button>
+</form>
+
+<style>
+  .form-heading {
+    text-align: center;
+    color: #4285F4;
+    margin-bottom: 20px;
+    font-size: 26px;
+  }
+
+  .assign-task-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 25px 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .assign-task-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .assign-task-form input,
+  .assign-task-form textarea,
+  .assign-task-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .assign-task-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .assign-task-form button {
+    background-color: #0F9D58;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .assign-task-form button:hover {
+    background-color: #0b7c45;
+  }
+</style>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin - Attendance Dashboard</h2>
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>Student</th>
+      <th>Marked</th>
+      <th>Event Head Approved</th>
+      <th>HOD Approved</th>
+      <th>Pushed to ERP</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in attendance_list %}
+    <tr>
+      <td>{{ a.event.title }}</td>
+      <td>{{ a.student.username }}</td>
+      <td>{{ a.marked_by_student|yesno:"✅,❌" }}</td>
+      <td>{{ a.approved_by_event_head|yesno:"✅,❌" }}</td>
+      <td>{{ a.approved_by_hod|yesno:"✅,❌" }}</td>
+      <td>{{ a.pushed_to_erp|yesno:"✅,❌" }}</td>
+      <td>{{ a.marked_at|date:"Y-m-d H:i" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

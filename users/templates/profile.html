@@ -1,0 +1,12 @@
+<!-- users/templates/users/profile.html -->
+<h2>Welcome, {{ user.username }}</h2>
+<p>Email: {{ user.email }}</p>
+<p>Role: {{ user.get_role_display }}</p>
+
+{% if user.role == 'student' %}
+    <p>Events Joined: (coming soon)</p>
+{% elif user.role == 'faculty' %}
+    <p>Department Info: (custom field if needed)</p>
+{% elif user.role == 'gdg' %}
+    <p>Assigned Tasks: (coming soon)</p>
+{% endif %}

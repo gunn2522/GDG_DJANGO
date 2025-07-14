@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}GDG Dashboard{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <img src="{% static 'images/gdg_logo.png' %}" alt="GDG Logo" style="height: 50px; width: auto;">
+
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --main-bg: #f5f7fa;
+      --sidebar-bg: #1a237e;
+      --sidebar-hover: #3949ab;
+      --text-color: #000;
+      --footer-bg: #e8eaf6;
+    }
+
+    body.dark {
+      --main-bg: #121212;
+      --sidebar-bg: #0d1b3f;
+      --sidebar-hover: #1e3a8a;
+      --text-color: #f0f0f0;
+      --footer-bg: #1e1e1e;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--main-bg);
+      color: var(--text-color);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: var(--sidebar-bg);
+      color: white;
+      position: fixed;
+      height: 100vh;
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+      padding-top: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      color: white;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .sidebar a i {
+      margin-right: 10px;
+    }
+
+    .sidebar a:hover {
+      background-color: var(--sidebar-hover);
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      left: 260px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1001;
+      background: var(--sidebar-bg);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: none;
+      transition: left 0.3s ease;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 20px;
+      left: 320px;
+      z-index: 1001;
+      background: var(--sidebar-bg);
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .sidebar.collapsed {
+      transform: translateX(-250px);
+    }
+
+    .sidebar.collapsed ~ .toggle-btn {
+      left: 10px;
+    }
+
+    .sidebar.collapsed ~ .dark-toggle {
+      left: 70px;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+      width: 100%;
+      transition: margin-left 0.3s ease;
+      padding-bottom: 80px;
+    }
+
+    .sidebar.collapsed ~ .main-content {
+      margin-left: 0;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 250px;
+      right: 0;
+      height: 40px;
+      background-color: var(--footer-bg);
+      text-align: center;
+      padding: 10px;
+      color: #333;
+      font-size: 14px;
+      border-top: 1px solid #ccc;
+      z-index: 999;
+    }
+
+    .sidebar.collapsed ~ .main-content footer {
+      left: 0;
+    }
+
+    @media (max-width: 768px) {
+      .toggle-btn,
+      .dark-toggle {
+        left: 10px !important;
+        top: 10px;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .sidebar {
+        z-index: 1000;
+      }
+
+      footer {
+        left: 0;
+      }
+    }
+  </style>
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2><img src="{% static 'images/gdg_logo.png' %}" style="height: 40px; vertical-align: middle;"> GDG GGI</h2>
+    <a href="{% url 'dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
+
+    {% if request.user.is_authenticated %}
+      {% if request.user.role in 'admin event_lead hod' %}
+        <a href="{% url 'user_list' %}"><i class="fas fa-users"></i> Users</a>
+      {% endif %}
+
+      <a href="{% url 'event_list' %}"><i class="fas fa-calendar-alt"></i> Events</a>
+      <a href="/attendence/"><i class="fas fa-clipboard-list"></i> Attendance</a>
+
+      {% if request.user.role in 'admin event_lead hod gdg_member' %}
+        <a href="{% url 'assign_task' %}"><i class="fas fa-tasks"></i> Tasks</a>
+      {% endif %}
+
+      {% if request.user.role in 'admin event_lead hod' %}
+        <a href="{% url 'infra_report' %}"><i class="fas fa-tools"></i> Infra Issues</a>
+      {% endif %}
+
+      {% if request.user.role != 'student' %}
+        <a href="{% url 'my_performance' %}"><i class="fas fa-chart-line"></i> Performance</a>
+      {% endif %}
+
+      <a href="{% url 'ai_chat' %}"><i class="fas fa-robot"></i> AI Assistant</a>
+      <a href="{% url 'profile' %}"><i class="fas fa-user-circle"></i> Profile</a>
+      <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    {% endif %}
+  </div>
+
+  <!-- Toggle Sidebar Button -->
+  <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+  <!-- Toggle Dark Mode Button -->
+  <button class="dark-toggle" onclick="toggleDarkMode()">
+    <i class="fas fa-adjust"></i>
+  </button>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    {% block content %}{% endblock %}
+    <footer>
+      &copy; 2025 GDG Gulzar Group of Institutes | Built using Django
+    </footer>
+  </div>
+
+  <!-- JS Toggle -->
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('collapsed');
+      document.querySelector('.main-content').classList.toggle('collapsed');
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Review Attendance (Event Head) – {{ event.title }}</h2>
+<form method="post">
+  {% csrf_token %}
+  <table>
+    <thead>
+      <tr>
+        <th>Select</th>
+        <th>Student</th>
+        <th>Marked?</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for attendance in attendance_list %}
+      <tr>
+        <td><input type="checkbox" name="approve_ids" value="{{ attendance.id }}"></td>
+        <td>{{ attendance.student.username }}</td>
+        <td>{{ attendance.marked_by_student }}</td>
+        <td>{{ attendance.marked_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <button type="submit">Approve Selected</button>
+</form>
+{% endblock %}

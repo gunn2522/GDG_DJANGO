@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GDG Dashboard - Gulzar Group of Institutes</title>
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <img src="{% static 'images/gdg_logo.png' %}" alt="GDG Logo" style="height: 50px; width: auto;">
+        </div>
+        <div class="header-center">
+            <h1>Google Developer Groups</h1>
+            <p>Gulzar Group of Institutes - Centralized Dashboard</p>
+        </div>
+        <div class="header-right">
+            {% if user.is_authenticated %}
+                <span>Welcome, {{ user.username }}</span> |
+                <a href="{% url 'logout' %}" class="btn btn-red">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-blue">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="grid">
+        {% if user.is_authenticated %}
+
+            <!-- Users Section -->
+            {% if user.role in "admin event_lead hod event_head" %}
+            <div class="card border-blue">
+                <h3>Users</h3>
+                <p>Manage student and faculty accounts.</p>
+                <a href="{% url 'user_list' %}" class="btn btn-blue">Go to Users</a>
+            </div>
+            {% endif %}
+
+            <!-- GDG Tasks Section -->
+            {% if user.role in "admin event_lead hod gdg_member" %}
+            <div class="card border-green">
+                <h3>GDG Tasks</h3>
+                <p>{% if user.role == "gdg_member" %}View your assigned GDG tasks.{% else %}Assign or view GDG tasks.{% endif %}</p>
+                <a href="{% url 'assign_task' %}" class="btn btn-green">Manage Tasks</a>
+            </div>
+            {% endif %}
+
+            <!-- Infra Issues -->
+            {% if user.role in "admin event_lead hod event_head" %}
+            <div class="card border-blue">
+                <h3>Infra Issues</h3>
+                <p>Report and resolve infrastructure issues.</p>
+                <a href="{% url 'infra_report' %}" class="btn btn-blue">View Issues</a>
+            </div>
+            {% endif %}
+
+            <!-- Events Section -->
+            {% if user.role in "admin event_lead hod gdg_member student event_head" %}
+            <div class="card border-red">
+                <h3>Events</h3>
+                <p>View, add and manage campus events.</p>
+                <a href="{% url 'event_list' %}" class="btn btn-red">Go to Events</a>
+            </div>
+            {% endif %}
+
+            <!-- Attendance -->
+            {% if user.role in "admin event_lead hod gdg_member student event_head" %}
+            <div class="card border-yellow">
+                <h3>Attendance</h3>
+                <p>Track event attendance and reports.</p>
+                <a href="/attendence/" class="btn btn-yellow">View Attendance</a>
+            </div>
+            {% endif %}
+
+            <!-- Performance -->
+            {% if user.role in "admin event_lead hod gdg_member" %}
+            <div class="card border-red">
+                <h3>Performance</h3>
+                <p>Monitor GDG team performance.</p>
+                <a href="{% url 'my_performance' %}" class="btn btn-red">Team Metrics</a>
+            </div>
+            {% endif %}
+
+            <!-- AI Assistant -->
+            {% if user.role in "admin event_lead hod gdg_member student event_head" %}
+            <div class="card border-green">
+                <h3>AI Assistant</h3>
+                <p>Get smart recommendations & summaries.</p>
+                <a href="{% url 'ai_chat' %}" class="btn btn-green">Ask Assistant</a>
+            </div>
+            {% endif %}
+
+            <!-- Profile -->
+            {% if user.role in "admin event_lead hod gdg_member student event_head" %}
+            <div class="card border-blue">
+                <h3>My Profile</h3>
+                <p>View your profile and personal details.</p>
+                <a href="{% url 'profile' %}" class="btn btn-blue">View Profile</a>
+            </div>
+            {% endif %}
+
+            <!-- My Created Events -->
+            {% if user.role == "event_head" %}
+            <div class="card border-green">
+                <h3>My Created Events</h3>
+                {% if events_created %}
+                    <ul>
+                        {% for event in events_created %}
+                            <li>{{ event.title }} — {{ event.date }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No events created yet.</p>
+                {% endif %}
+                <a href="{% url 'event_list' %}" class="btn btn-green">Manage Events</a>
+            </div>
+
+            <!-- Pending Approvals -->
+            <div class="card border-yellow">
+                <h3>Pending Approvals</h3>
+                {% if approval_pending %}
+                    <ul>
+                        {% for reg in approval_pending %}
+                            <li>{{ reg.event.title }} - {{ reg.student.username }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No pending approvals.</p>
+                {% endif %}
+                <a href="{% url 'approval_dashboard' %}" class="btn btn-yellow">Review Requests</a>
+            </div>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 GDG Gulzar Group of Institutes | Built using Django
+    </footer>
+</body>
+</html>

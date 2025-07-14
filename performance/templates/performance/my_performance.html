@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}My GDG Performance{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width:600px;margin:40px auto;">
+    <div class="card">
+        <h2 style="text-align:center;">My GDG Performance</h2>
+        <ul style="list-style:none;padding:0;">
+          <li><strong>Total Score:</strong> {{ record.total_score }}</li>
+          <li><strong>Tasks Completed:</strong> {{ record.tasks_completed }}</li>
+          <li><strong>Events Led:</strong> {{ record.events_led }}</li>
+          <li><strong>Infra Issues Reported:</strong> {{ record.issues_reported }}</li>
+          <li><strong>Faculty Comment:</strong> {{ record.admin_comment|default:"No comment yet" }}</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

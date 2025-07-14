@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ event.title }}</title>
+  <style>
+    body {
+      font-family: Roboto, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #4285F4;
+    }
+    p {
+      margin: 10px 0;
+    }
+    .badge {
+      padding: 4px 8px;
+      font-size: 12px;
+      background: #4CAF50;
+      color: #fff;
+      border-radius: 4px;
+    }
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-back {
+      background: #aaa;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    img.poster {
+      max-width: 100%;
+      height: auto;
+      margin: 10px 0;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{% url 'event_list' %}" class="btn btn-back">← Back</a>
+
+    <h1>{{ event.title }}</h1>
+
+    {% if event.poster %}
+      <img src="{{ event.poster.url }}" alt="{{ event.title }} Poster" class="poster">
+    {% endif %}
+
+    <p>{{ event.description }}</p>
+
+    <p><strong>Date:</strong> {{ event.date|date:"Y-m-d" }} @ {{ event.time|time:"H:i" }}</p>
+
+    <p><strong>Venue:</strong> {{ event.venue }}
+      {% if event.is_venue_approved_by_hod %}
+        <span class="badge">Approved</span>
+      {% endif %}
+    </p>
+
+
+
+    <p><strong>Systems Required:</strong> {{ event.systems_required }}</p>
+
+    <p><strong>Apply By:</strong> {{ event.last_date_to_apply|date:"Y-m-d" }}</p>
+
+    {% if event.assigned_teachers.exists %}
+      <p><strong>Assigned Teachers:</strong>
+        {% for teacher in event.assigned_teachers.all %}
+          {{ teacher.get_full_name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </p>
+    {% endif %}
+
+    {% if event.gdg_team_members.exists %}
+      <p><strong>GDG Team:</strong>
+        {% for member in event.gdg_team_members.all %}
+          {{ member.get_full_name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </p>
+    {% endif %}
+
+  </div>
+</body>
+</html>

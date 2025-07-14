@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Attendance Records{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Attendance Records</h1>
+
+    {% if user.role in "Admin GDG" %}
+        <h3>Select an event to mark attendance:</h3>
+        <ul>
+            {% for event in events %}
+                <li>
+                    {{ event.title }} ({{ event.date|date:"Y-m-d" }})
+                    <a href="{% url 'mark_attendance' event.id %}" class="btn btn-blue btn-sm">Mark Attendance</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h3>Your Attendance</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.event.title }}</td>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.status }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="3">No attendance records.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
