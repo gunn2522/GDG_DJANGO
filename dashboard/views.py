@@ -15,8 +15,8 @@ def dashboard_view(request):
     context = {}
 
     # Allow access if user is authenticated or demo
-    # if not user.is_authenticated and not getattr(request, 'is_demo', False):
-    #     return redirect('login')
+    if not user.is_authenticated and not getattr(request, 'is_demo', False):
+        return redirect('login')
 
     # Block non-admins who are not demo
     if not user.is_superuser and not getattr(request, 'is_demo', False):

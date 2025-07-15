@@ -181,11 +181,8 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 LOGIN_REDIRECT_URL = '/dashboard/'  # Where to go after login
 LOGIN_URL = '/accounts/login/'      # Where to go if login is required
 
+import os
+
 STATIC_URL = '/static/'
-
-# Optional: only if you have additional static dirs during dev
-# STATICFILES_DIRS = [
-#     BASE_DIR / "static",  # only if you’re keeping static assets separate
-# ]
-
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]  # Your custom static folder
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")    # Where collectstatic will place files
