@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import path,include
 
 from GDG_project import settings
@@ -23,7 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', dashboard_view, name='dashboard'),
-
+    path('', lambda request: redirect('login')),  # 👈 Redirect to login page
     path('users/', include('users.urls')),
     path('events/', include('events.urls')),
     path('attendence/', include('attendence.urls')),
