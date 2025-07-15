@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "vercel_postbuild": "python manage.py migrate"
-  },
+  "vercel_postbuild": "python manage.py migrate && python manage.py collectstatic --noinput"
+},
+
   "repository": {
     "type": "git",
     "url": "https://github.com/gunn2522/gdg_project.git"

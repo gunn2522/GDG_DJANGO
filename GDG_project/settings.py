@@ -153,8 +153,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [ BASE_DIR / "static" ]  # or os.path.join(BASE_DIR, 'static')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -182,4 +181,11 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 LOGIN_REDIRECT_URL = '/dashboard/'  # Where to go after login
 LOGIN_URL = '/accounts/login/'      # Where to go if login is required
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # <-- your source directory
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"  # <-- collected static files go here during deployment
+
