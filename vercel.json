@@ -2,18 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+      "src": "GDG_project/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "staticfiles/$1"
+      "dest": "/staticfiles/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "api/index.py"
+      "dest": "/GDG_project/wsgi.py"
     }
-  ]
+  ],
+  "buildCommand": "./vercel_build.sh"
 }
