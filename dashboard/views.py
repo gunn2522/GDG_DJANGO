@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render
 from users.models import User
 from events.models import Event, EventRegistration
@@ -9,6 +10,15 @@ from attendence.models import Attendance
 def dashboard_view(request):
     user = request.user
     context = {}
+
+    if not request.user.is_authenticated and not getattr(request, 'is_demo', False):
+        return redirect('login')
+
+    if not request.user.is_superuser and not getattr(request, 'is_demo', False):
+        return HttpResponseForbidden("Not allowed")
+
+      # or whatever your query is
+    return render(request, 'dashboard.html', {'data': data})
 
     if not user.is_authenticated:
         context["common"] = True
