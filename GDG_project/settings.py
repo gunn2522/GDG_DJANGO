@@ -105,15 +105,18 @@ WSGI_APPLICATION = 'GDG_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'USER':'admin',
-        'PASSWORD':'123',
-        'HOST':'localhost',
+        'NAME': os.getenv('SQLITE_DB_PATH', BASE_DIR / 'db.sqlite3'),
     }
 }
+
 
 
 # Password validation
