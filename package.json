@@ -1,0 +1,14 @@
+{
+  "name": "gdg_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "vercel_postbuild": "python manage.py migrate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gunn2522/gdg_project.git"
+  },
+  "private": true
+}
