@@ -15,7 +15,12 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "GDG_project.settings")
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 # Fix: Ensure that Vercel uses this as entry point
-app = get_wsgi_application()
 
 
+
+import sys
+sys.path.append('./GDG_project')
+
+from django.core.asgi import get_asgi_application
+app = get_asgi_application()
 
