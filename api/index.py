@@ -2,6 +2,7 @@
 import os
 import sys
 
+
 from django.core.wsgi import get_wsgi_application
 
 # Ensure the app root is in the path
@@ -15,3 +16,6 @@ os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 # Fix: Ensure that Vercel uses this as entry point
 app = get_wsgi_application()
+
+
+
