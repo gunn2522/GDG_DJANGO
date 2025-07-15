@@ -183,9 +183,9 @@ LOGIN_URL = '/accounts/login/'      # Where to go if login is required
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # <-- your source directory
-]
+# Optional: only if you have additional static dirs during dev
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",  # only if you’re keeping static assets separate
+# ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"  # <-- collected static files go here during deployment
-
+STATIC_ROOT = BASE_DIR / "staticfiles"
