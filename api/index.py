@@ -1,6 +1,12 @@
 # api/index.py
 import os
 import sys
+from GDG_project.wsgi import app
+
+# Vercel expects either `app` or `handler`
+# In Django, `app` is your WSGI callable, so we just expose it directly
+handler = app
+
 
 
 from django.core.wsgi import get_wsgi_application
