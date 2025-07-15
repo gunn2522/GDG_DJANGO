@@ -49,6 +49,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
+    'GDG_project.middleware.FakeLoginMiddleware',
+
+
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -88,6 +92,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'USER':'admin',
+        'PASSWORD':'123',
+        'HOST':'localhost',
     }
 }
 
