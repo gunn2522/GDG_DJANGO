@@ -48,9 +48,8 @@ from users import views as user_views  # for custom_login_view
 
 # 👇 Home redirect view
 def home_redirect(request):
-    if request.user.is_authenticated:
-        return redirect('dashboard')  # Redirect to dashboard if logged in
-    return redirect('login')  # Redirect to login if not logged in
+    return redirect('dashboard')
+
 
 urlpatterns = [
     path('', home_redirect, name='home'),  # Root URL redirect logic
