@@ -1,4 +1,3 @@
-# middleware.py
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 
@@ -7,26 +6,17 @@ class FakeLoginMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        try:
-            from django.contrib.auth.middleware import get_user
-            user = get_user(request)  # Avoids .user access before ready
+        User = get_user_model()
 
-            if not hasattr(request, 'user'):
-                request.user = AnonymousUser()
+        # Auto-create demo user if it doesn't exist
+        demo_user, created = User.objects.get_or_create(
+            username='demo',
+            defaults={'email': 'demo@example.com'}
+        )
 
-            if request.user.is_authenticated:
-                return self.get_response(request)
+        # Optionally set is_staff or permissions
+        demo_user.is_staff = True
+        demo_user.save()
 
-            User = get_user_model()
-            demo_user = User.objects.filter(username='demo').first()
-            if demo_user:
-                request.user = demo_user
-            else:
-                request.user = AnonymousUser()
-
-        except Exception as e:
-            import logging
-            logging.error(f"FakeLoginMiddleware Error: {e}")
-            request.user = AnonymousUser()
-
+        request.user = demo_user
         return self.get_response(request)
