@@ -173,6 +173,16 @@
     <h2><img src="{% static 'images/gdg_logo.png' %}" style="height: 40px; vertical-align: middle;"> GDG GGI</h2>
     <a href="{% url 'dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
 
+{#  <a href="{% url 'dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>#}
+{#  <a href="{% url 'user_list' %}"><i class="fas fa-users"></i> Users</a>#}
+{#  <a href="{% url 'event_list' %}"><i class="fas fa-calendar-alt"></i> Events</a>#}
+{#  <a href="/attendence/"><i class="fas fa-clipboard-list"></i> Attendance</a>#}
+{#  <a href="{% url 'assign_task' %}"><i class="fas fa-tasks"></i> Tasks</a>#}
+{#  <a href="{% url 'infra_report' %}"><i class="fas fa-tools"></i> Infra Issues</a>#}
+{#  <a href="{% url 'my_performance' %}"><i class="fas fa-chart-line"></i> Performance</a>#}
+{#  <a href="{% url 'ai_chat' %}"><i class="fas fa-robot"></i> AI Assistant</a>#}
+{#  <a href="{% url 'profile' %}"><i class="fas fa-user-circle"></i> Profile</a>#}
+
     {% if request.user.is_authenticated %}
       {% if request.user.role in 'admin event_lead hod' %}
         <a href="{% url 'user_list' %}"><i class="fas fa-users"></i> Users</a>

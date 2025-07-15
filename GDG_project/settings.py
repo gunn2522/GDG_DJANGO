@@ -152,5 +152,6 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 
 
+LOGIN_REDIRECT_URL = '/dashboard/'  # Where to go after login
+LOGIN_URL = '/accounts/login/'      # Where to go if login is required
 
-LOGIN_REDIRECT_URL = '/dashboard/'  # or use reverse('dashboard') in views

@@ -12,4 +12,5 @@ urlpatterns = [
     path('<int:event_id>/approve-venue/', views.approve_venue, name='approve_venue'),
     path('<int:event_id>/approve-attendance/', views.approve_attendance, name='approve_attendance'),
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
+
 ]

@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .gemini_client import get_ai_response
 
-@login_required
 def chat_assistant(request):
     answer = None
     if request.method == "POST":
