@@ -14,18 +14,7 @@ def dashboard_view(request):
     user = request.user
     context = {}
 
-    # Allow access if user is authenticated or demo
-    if not user.is_authenticated and not getattr(request, 'is_demo', False):
-        return redirect('login')
 
-    # Block non-admins who are not demo
-    if not user.is_superuser and not getattr(request, 'is_demo', False):
-        return HttpResponseForbidden("Not allowed")
-
-    # Common dashboard for demo or unauthenticated view
-    if not user.is_authenticated:
-        context["common"] = True
-        return render(request, "dashboard.html", context)
 
     # Role-based context
     if user.role == "student":
