@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
 
     'GDG_project.middleware.FakeLoginMiddleware',
-
+'django.contrib.auth.middleware.AuthenticationMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',

@@ -16,3 +16,19 @@ class FakeLoginMiddleware:
             request.user = AnonymousUser()  # fallback if demo user not found
 
         return self.get_response(request)
+# middleware.py (final version)
+
+class DemoUser:
+    is_authenticated = True
+    username = "demo"
+    role = "Admin"   # You can also use "student", "GDG", etc.
+    email = "demo@example.com"
+
+class FakeLoginMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        request.user = DemoUser()  # Inject fake user object
+        return self.get_response(request)
+W
