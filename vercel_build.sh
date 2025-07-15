@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# Install dependencies
+# Install Python dependencies (if not already handled)
 pip install -r requirements.txt
 
-# Migrate and collect static
-python manage.py migrate --noinput
+# Collect static files
 python manage.py collectstatic --noinput
+
+# Apply migrations
+python manage.py migrate
