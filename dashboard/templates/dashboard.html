@@ -29,6 +29,12 @@
 
     <!-- Dashboard Cards -->
     <div class="grid">
+    {% if is_demo %}
+  <div style="background-color: #ffa726; color: white; padding: 10px; margin-bottom: 20px;">
+    ⚠️ You are viewing the dashboard as a <strong>Demo User</strong>. Some features may be limited.
+  </div>
+{% endif %}
+
         {% if user.is_authenticated %}
 
             <!-- Users Section -->
