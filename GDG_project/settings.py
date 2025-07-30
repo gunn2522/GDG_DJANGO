@@ -478,3 +478,4 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+print("Vercel DEBUG - DATABASE_URL =", repr(os.environ.get("DATABASE_URL")))
