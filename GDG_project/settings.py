@@ -380,6 +380,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 
     # Custom apps
     'users',
@@ -403,8 +404,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.AutoLoginAsDemoUserMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
+
+CORS_ALLOWED_ORIGINS = [
+'https://gdg-project-psi.vercel.app/'
+]
 # Dev-only middleware
 if os.getenv("ENV") == "development":
     MIDDLEWARE.insert(
@@ -488,3 +494,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['.vercel.app', 'localhost']
+
+import os
+
+BACKEND_URL = os.getenv("BACKEND_URL", "https://gdg-project.onrender.com/")
+
