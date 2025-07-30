@@ -409,7 +409,7 @@ MIDDLEWARE = [
 
 
 CORS_ALLOWED_ORIGINS = [
-'https://gdg-project-psi.vercel.app/'
+'https://gdg-project-psi.vercel.app'
 ]
 # Dev-only middleware
 if os.getenv("ENV") == "development":
