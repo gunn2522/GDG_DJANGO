@@ -197,3 +197,13 @@ import os
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]  # Your custom static folder
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")    # Where collectstatic will place files
+
+
+import os
+
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+
+
+from dotenv import load_dotenv
+load_dotenv()
