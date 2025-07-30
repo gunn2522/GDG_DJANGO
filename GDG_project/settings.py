@@ -208,32 +208,171 @@
 # }
 
 # GDG_project/settings.py
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-
-
-
-
-import os
+# from dotenv import load_dotenv
+# import os
+#
+# load_dotenv()
+#
+#
+#
+#
+#
+# import os
+# from pathlib import Path
+# import dj_database_url
+#
+#
+#
+#
+#
+# # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR = Path(__file__).resolve().parent.parent
+#
+# # Quick-start development settings
+# SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-h=7q8a_q1l3@-)9byt1kjm1qr*a1hp_ila_#+*4hex&^6vu+aw')
+# DEBUG = os.getenv("DEBUG", "True") == "True"
+# ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
+#
+# # Application definition
+# INSTALLED_APPS = [
+#     'django.contrib.admin',
+#     'django.contrib.auth',
+#     'django.contrib.contenttypes',
+#     'django.contrib.sessions',
+#     'django.contrib.messages',
+#     'django.contrib.staticfiles',
+#     'users',
+#     'events',
+#     'attendence',
+#     'gdg_tasks',
+#     'infra_issues',
+#     'performance',
+#     'ai_assistant',
+#     'dashboard',
+# ]
+#
+# MIDDLEWARE = [
+#     'django.middleware.security.SecurityMiddleware',
+#     'whitenoise.middleware.WhiteNoiseMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     'users.middleware.AutoLoginAsDemoUserMiddleware',
+#
+#
+# ]
+#
+# if os.getenv("ENV") == "development":
+#     MIDDLEWARE.insert(
+#         MIDDLEWARE.index('django.contrib.auth.middleware.AuthenticationMiddleware') + 1,
+#         'GDG_project.middleware.FakeLoginMiddleware'
+#     )
+#
+# ROOT_URLCONF = 'GDG_project.urls'
+#
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [BASE_DIR / 'templates'],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
+#
+# WSGI_APPLICATION = 'GDG_project.wsgi.application'
+#
+# import dj_database_url
+# import os
+#
+# DATABASE_URL = os.getenv('DATABASE_URL')
+#
+# if DATABASE_URL:
+#
+#
+#     DATABASES = {
+#         'default': dj_database_url.parse(DATABASE_URL)
+#     }
+# else:
+#     print("⚠️ WARNING: No DATABASE_URL found. Using SQLite fallback.")
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         }
+#     }
+#
+#
+#
+#
+# # Password validation
+# AUTH_PASSWORD_VALIDATORS = [
+#     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+#     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+#     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+#     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+# ]
+#
+# # Internationalization
+# LANGUAGE_CODE = 'en-us'
+# TIME_ZONE = 'Asia/Kolkata'
+# USE_I18N = True
+# USE_TZ = True
+#
+# # Static files (CSS, JavaScript, Images)
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build") # Use 'staticfiles_build' to match vercel.json
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#
+# # Media files
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#
+# # Default primary key field type
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# AUTH_USER_MODEL = 'users.User'
+#
+# # Other settings
+# GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+# LOGIN_REDIRECT_URL = '/dashboard/'
+# LOGIN_URL = '/accounts/login/'
+#
+# # --- NEW DATABASE CONFIGURATION ---
+# # PASTE YOUR NEON URL between the quotes
+# NEON_URL = "postgresql://neondb_owner:npg_AQiqbmwG9Ij0@ep-shy-hill-adidebm8-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+#
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=NEON_URL,
+#         conn_max_age=600
+#     )
+# }
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 import dj_database_url
 
+# Load environment variables from .env
+load_dotenv()
 
-
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings
-SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-h=7q8a_q1l3@-)9byt1kjm1qr*a1hp_ila_#+*4hex&^6vu+aw')
+# Security
+SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-fallback-key')
 DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
 
-# Application definition
+# Applications
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -241,6 +380,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Custom apps
     'users',
     'events',
     'attendence',
@@ -251,28 +392,30 @@ INSTALLED_APPS = [
     'dashboard',
 ]
 
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.AutoLoginAsDemoUserMiddleware',
-
-
 ]
 
+# Dev-only middleware
 if os.getenv("ENV") == "development":
     MIDDLEWARE.insert(
         MIDDLEWARE.index('django.contrib.auth.middleware.AuthenticationMiddleware') + 1,
         'GDG_project.middleware.FakeLoginMiddleware'
     )
 
+# URLs
 ROOT_URLCONF = 'GDG_project.urls'
 
+# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -288,30 +431,23 @@ TEMPLATES = [
     },
 ]
 
+# WSGI
 WSGI_APPLICATION = 'GDG_project.wsgi.application'
 
-import dj_database_url
-import os
-
+# 🔥 Database configuration from .env
 DATABASE_URL = os.getenv('DATABASE_URL')
 
-if DATABASE_URL:
+if not DATABASE_URL:
+    raise ValueError("❌ DATABASE_URL is not set in your environment or .env file.")
 
+DATABASES = {
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+}
 
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL)
-    }
-else:
-    print("⚠️ WARNING: No DATABASE_URL found. Using SQLite fallback.")
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-
-
-
+# Auth
+AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_URL = '/accounts/login/'
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -321,38 +457,24 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalization
+# Timezone and language
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Static files
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build") # Use 'staticfiles_build' to match vercel.json
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build")  # For Vercel
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Google API Key
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'users.User'
-
-# Other settings
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-LOGIN_REDIRECT_URL = '/dashboard/'
-LOGIN_URL = '/accounts/login/'
-
-# --- NEW DATABASE CONFIGURATION ---
-# PASTE YOUR NEON URL between the quotes
-NEON_URL = "postgresql://neondb_owner:npg_AQiqbmwG9Ij0@ep-shy-hill-adidebm8-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default=NEON_URL,
-        conn_max_age=600
-    )
-}
