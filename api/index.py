@@ -1,3 +1,5 @@
+# api/index.py
+
 import os
 import sys
 
@@ -11,5 +13,5 @@ os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 from django.core.wsgi import get_wsgi_application
 
-# Vercel looks for `app` or `handler`
+# Vercel uses this as the entry point
 app = get_wsgi_application()
