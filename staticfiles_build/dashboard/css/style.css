@@ -1,0 +1,148 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    color: #202124;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    border-bottom: 2px solid #e0e0e0;
+    background: #fff;
+}
+
+.header-left {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.header-left img {
+    height: 70px;
+    margin-bottom: 0;
+    margin-right: 0;
+}
+
+.header-center {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.header-center h1 {
+    font-size: 28px;
+    margin: 10px 0 5px;
+    color: #202124;
+}
+
+.header-center p {
+    font-size: 16px;
+    color: #5f6368;
+}
+
+.header-right {
+    flex: 0 0 auto;
+    min-width: 120px;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.header-right .btn {
+    margin-top: 0;
+}
+
+.grid {
+    flex: 1 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 40px 30px;
+}
+
+.card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(60, 64, 67, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #202124;
+}
+
+.card p {
+    font-size: 14px;
+    color: #5f6368;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    color: white;
+}
+
+.btn-blue {
+    background-color: #4285F4;
+}
+
+.btn-red {
+    background-color: #EA4335;
+}
+
+.btn-yellow {
+    background-color: #FBBC05;
+    color: #202124;
+}
+
+.btn-green {
+    background-color: #34A853;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Optional colored top borders */
+.border-blue   { border-top: 5px solid #4285F4; }
+.border-red    { border-top: 5px solid #EA4335; }
+.border-yellow { border-top: 5px solid #FBBC05; }
+.border-green  { border-top: 5px solid #34A853; }
+
+footer {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    color: #5f6368;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 20px;
+    background: #fff;
+    width: 100%;
+}
